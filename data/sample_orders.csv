@@ -1,0 +1,39 @@
+type,order_id,trader_id,side,price,qty
+# Sample order flow for testing
+# L = Limit, M = Market, C = Cancel, X = Modify
+# Side: B = Buy, S = Sell
+
+# Initial limit orders to build the book
+L,1,0,B,9990,100
+L,2,0,B,9980,200
+L,3,0,B,9970,150
+L,4,1,S,10010,100
+L,5,1,S,10020,200
+L,6,1,S,10030,150
+
+# Cross the spread - should trigger trades
+L,7,2,B,10010,50
+L,8,2,S,9990,75
+
+# Add more depth
+L,9,0,B,9985,300
+L,10,1,S,10015,250
+
+# Cancel some orders
+C,2,,,,
+C,5,,,,
+
+# Modify an order
+M,3,,,,200
+
+# More crossing trades
+L,11,3,B,10015,100
+L,12,3,S,9980,150
+
+# Market orders
+M,13,4,B,,,50
+M,14,4,S,,,75
+
+# Final state orders
+L,15,0,B,9995,500
+L,16,1,S,10005,500
